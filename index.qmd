@@ -172,9 +172,11 @@ Excluded for "Medicare or Medicaid fraud, as well as any other offenses related 
 
 ## Challenges - Class Imbalance
 
-- Reported between .04% and .06% or
-- 40 and 60 per 10,000 providers or
-- 75/25 split 10 to 15 ++ in test set
+- Herland (2020)
+- 4 years Part B
+- 1.1 million physicans
+- 1,312 fraud
+- 10 + per 10,000 physicians
 
 ## Strategies 
 
@@ -183,11 +185,12 @@ Excluded for "Medicare or Medicaid fraud, as well as any other offenses related 
 - Hybrid
 - Match LEIE w/ NPI?
 
-## Example Matrix
+## Corpus/Matrix Size
 
-![](./img/ml_part_b.jpg)
+![](./img/herland_providers.png)
+## Corpus/Matrix Example
 
-Three years of internal medicine from TX, CA, NY, FL, yielded 89k observations, 2500+ columns,  and 42 fraud cases for a .00047 result. 
+![](./img/example_ml_fraud.png)
 
 # Explore
 
@@ -263,7 +266,11 @@ Three years of internal medicine from TX, CA, NY, FL, yielded 89k observations, 
 
 ![](./img/us_tx_exclusion_lists_compared.jpg)
 
+## Initial Effort
 
+![](./img/ml_part_b.jpg)
+
+Three years of internal medicine from TX, CA, NY, FL, yielded 89k observations, 2500+ columns,  and 42 fraud cases for a 5 per 10,000 result. 
 
 # Heatmaps
 
