@@ -1,0 +1,316 @@
+---
+title: "Excluded"
+subtitle: "An Exploration of the LEIE"
+author: ""
+title-slide-attributes:
+  data-background-image: "./img/title_slide.jpg"
+  data-background-size: contain
+  data-background-opacity: "0.5"
+bibliography: healthcare_fraud_ml.bib
+csl: ieee.csl
+format:
+  revealjs:
+    incremental: false
+    theme: dark
+    reference-location: document
+    logo: ""
+    footer: <a href="https://github.com/RobWiederstein/libby/blob/main/LICENSE.md">MIT License 2023</a>
+    slide-number: true
+    controls: true
+    multiplex: false
+    chalkboard: true
+  html:
+    embed-resources: true
+---
+
+# Overview
+
+- What?
+- Why?
+- Explore
+- Places to Start
+- Heatmaps
+- LEIE Alternatives
+- Observations
+- Questions
+
+# What?
+
+:::{.notes}
+"OIG has the authority to exclude individuals and entities from Federally funded health care programs for a variety of reasons, including a conviction for Medicare or Medicaid fraud. Those that are excluded can receive no payment from Federal health care programs for any items or services they furnish, order, or prescribe. This includes those that provide health benefits funded directly or indirectly by the United States (other than the Federal Employees Health Benefits Plan)."[@zotero-2753]
+::::
+
+## LEIE
+
+- [List of Excluded Individuals and Entities](https://www.oig.hhs.gov/exclusions/index.asp)
+- Maintained by OIG
+- 78k obs
+- 18 vars
+- 1977 - 2023
+- 150/mon
+- updated monthly
+
+## Waivers
+
+- Waiver when 
+  - sole provider;
+  - essential service; and
+  - community hardship
+
+:::{.notes}
+An individual or entity excluded under sections 1128(a)(1), (a)(3) or (a)(4) of the Act may be eligible for a waiver only when the excluded individual or entity is the sole community physician or the sole source of essential specialized services in a community AND the exclusion would impose a hardship on beneficiaries (as defined in section 1128A(i)(5) of the Act) of that program. An individual or entity excluded under section 1128(a)(2) of the Act as a result of a conviction related to patient abuse or neglect is not eligible for a waiver. See 42 CFR 1001.1801(a)-(b).[@zotero-2753]
+:::
+
+## Reinstatement
+
+Reinstatement if
+
+-  after exclusion period;
+-  after license reinstated; and
+-  no patient neglect or abuse
+  
+:::{.notes}
+"Individual or entity must apply for reinstatement and receive written notice from OIG that reinstatement has been granted."[@zotero-2753]
+:::
+
+## Mandatory Exclusions
+
+SSA 1128:
+
+-  section(a) Mandatory (4)
+    -  program-related crime
+    -  patient abuse
+    -  felony healthcare fraud
+    -  controlled substance
+  
+:::{.notes}
+Excluded for "Medicare or Medicaid fraud, as well as any other offenses related to the delivery of items or services under Medicare, Medicaid, SCHIP, or other State health care programs; patient abuse or neglect; felony convictions for other health care-related fraud, theft, or other financial misconduct; and felony convictions relating to unlawful manufacture, distribution, prescription, or dispensing of controlled substances."[@zotero-2753]
+:::
+
+## Permissive SSA 1128
+  
+-  section(b) permissive (17) 
+
+:::{.notes}
+- misdemeanor convictions related to health care fraud other than Medicare or a State health program;
+- fraud in a program (other than a health care program) funded by any Federal, State or local government agency; 
+- misdemeanor convictions relating to the unlawful manufacture, distribution, prescription, or dispensing of controlled substances; suspension, revocation, or surrender of a license to provide health care for reasons bearing on professional competence, professional performance, or financial integrity;
+- provision of unnecessary or substandard services; submission of false or fraudulent claims to a Federal health care program; engaging in unlawful kickback arrangements; 
+- defaulting on health education loan or scholarship obligations; and controlling a sanctioned entity as an owner, officer, or managing employee.[@zotero-2753]
+:::
+
+## Permissive SSA 1156
+
+- services must be
+  - economical;
+  - medically necessary; and
+  - of sufficient quality; and if
+- provider fails in
+  -  substantial number of cases substantially to comply; or
+  -  grossly and flagrantly violated then
+- Secretary may exclude
+
+## Exclusions by Statute
+
+|statute |exclusion  |description                                | n_count|
+|:-------|:----------|:------------------------------------------|-------:|
+|1128b4  |Permissive |License revocation or suspension           |   31084|
+|1128a1  |Mandatory  |Conviction of program related crimes       |   23109|
+|1128a2  |Mandatory  |Conviction for patient abuse               |    7449|
+|1128a3  |Mandatory  |Felony conviction for healthcare fraud     |    4987|
+|1128a4  |Mandatory  |Felony conviction for controlled substance |    3140|
+> 
+
+## Consequences
+
+- No participation
+- No payments
+- No hiring
+
+## Variables
+
+<br>
+
+|          |          |         |           |
+|:---------|:---------|:--------|:----------|
+|lastname  |specialty |city     |reindate   |
+|firstname |upin      |state    |waiverdate |
+|midname   |npi       |zip      |wvrstate   |
+|busname   |dob       |excltype |           |
+|general   |address   |excldate |           |
+
+:::{.notes}
+"Those that are excluded can receive no payment from Federal health care programs for any items or services they furnish, order, or prescribe."[@zotero-2753]
+:::
+
+# Why care about the LEIE?
+
+## Machine Learning Pipeline
+
+1. Find data (predictors & <font color="red">outcome</font>)
+2. Create features
+3. Partition and stratify
+4. Choose models
+5. Resample
+6. Tuning
+7. Measure performance
+8. Test
+
+## Machine Learning Healthcare Fraud
+
+<br>
+<br>
+<br>
+
+:::{.r-stack}
+<span style="font-size:2em">Part B data <-- LEIE by NPI</span>
+:::
+
+## ML Healthcare Fraud Network Graph
+
+![](./img/research_rabbit.png){fig-align="center"}
+
+## Challenges - Class Imbalance
+
+- Reported between .04% and .06% or
+- 40 and 60 per 10,000 providers or
+- 75/25 split 10 to 15 ++ in test set
+
+## Strategies 
+
+- Random undersampling (90/10 optimal)
+- Random oversampling
+- Hybrid
+- Match LEIE w/ NPI?
+
+## Example Matrix
+
+![](./img/ml_part_b.jpg)
+
+Three years of internal medicine from TX, CA, NY, FL, yielded 89k observations, 2500+ columns,  and 42 fraud cases for a .00047 result. 
+
+# Explore
+
+## Missing Identifiers by Year
+
+![](./img/leie_missing_identifiers_by_year.jpg){fig-align="center"}
+
+## Individuals Excluded by Statutory Provision
+
+![](./img/individuals_excluded_by_statute_provision.jpg){fig-align="center"}
+
+## Exclusions by Statutory Provision
+
+![](./img/leie_exclusions_by_statutorty_provision.jpg){fig-align="center" width=600}
+
+## Average Monthly Exclusion
+
+![](./img/leie_avg_monthly_excl.jpg){fig-align="center"}
+
+## Excluded Physicans by Category
+
+![](./img/leie_excluded_phys_by_category.jpg){fig-align="center"}
+
+## Exclusions by Category
+
+![](./img/leie_exclusions_by_category.jpg){fig-align="center"}
+
+## Exclusions by General Category
+
+![](./img/leie_exclusions_by_gen_categ.jpg){fig-align="center"}
+
+## Exclusion by Type
+
+![](./img/leie_exclusions_by_type.jpg){fig-align="center"}
+
+## Exclusion by Type and Category
+
+![](./img/leie_exclusions_type_and_category.jpg){fig-align="center"}
+
+## Physicians Excluded by Specialty
+
+![](./img/leie_physican_excl_by_specialty.jpg){fig-align="center"}
+
+## Variable Importance Plot
+
+![](./img/variable_importance_plot.jpg){fig-align="center"}
+
+# Places to Start
+
+![](./img/leie_2022_pct_missing_pct_excluded.jpg){fig-align="center"}
+
+## California
+
+[![](./img/cal_hhs_exclusion_list_screenshot.png)](https://data.chhs.ca.gov/dataset/provider-suspended-and-ineligible-list-s-i-list/resource/552944e0-474d-4b3f-ac33-38f7b303a792)
+
+## CMS vs. California
+
+![](./img/us_ca_exclusion_lists_compared.jpg)
+
+## New York
+
+![](./img/ny_omig_exclusion_list_screenshot.png)
+
+## CMS vs New York
+
+![](./img/us_ny_exclusion_lists_compared.jpg)
+
+## Texas
+
+![](./img/tx_oig_exclusion_list_screenshot.png)
+
+## CMS vs. Texas
+
+![](./img/us_tx_exclusion_lists_compared.jpg)
+
+
+
+# Heatmaps
+
+## Exclusion by State and Statute
+
+![](./img/hm_by_excl_state.jpg){fig-align="center"}
+
+## Exclusion by State and Year
+
+![](./img/hm_by_state_year.jpg){fig-align="center"}
+
+## Exclusion to General
+
+![](./img/hm_leie_excl_to_general.jpg){fig-align="center"}
+
+## Physician Specialty to Exclusion
+
+![](./img/hm_physician_specialty_by_excl.jpg){fig-align="center"}
+
+# LEIE Alternatives
+
+## CMS Exclusions
+
+![](./img/cms_leie_exclusions_w_pii.png)
+[link](https://www.cms.gov/Research-Statistics-Data-and-Systems/Computer-Data-and-Systems/MED/Overview-MED)
+
+## NPDB
+
+![](./img/npdb_national_practitioner_data_bank.png)
+[link](https://www.npdb.hrsa.gov/)
+
+
+# Observations
+
+- Total annual exclusions are declining
+- Percent of excluded with NPIs is increasing
+- UPIN converted to NPIs around 2009
+- Medical practice --> to Doctor in 2009
+
+# Questions
+
+- Can the exclusions be scaled?
+- What exclusion types are indicative of fraud?
+- Are there strategies to boost NPI matches?
+- Will the LEIE remain relevant in future fraud detection?
+
+# Bibliography
+
+::: {#refs}
+:::
