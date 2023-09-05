@@ -188,6 +188,7 @@ Excluded for "Medicare or Medicaid fraud, as well as any other offenses related 
 ## Corpus/Matrix Size
 
 ![](./img/herland_providers.png)
+
 ## Corpus/Matrix Example
 
 ![](./img/example_ml_fraud.png)
