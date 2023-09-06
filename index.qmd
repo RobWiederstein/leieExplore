@@ -298,6 +298,12 @@ Three years of internal medicine from TX, CA, NY, FL, yielded 89k observations, 
 ![](./img/cms_leie_exclusions_w_pii.png)
 [link](https://www.cms.gov/Research-Statistics-Data-and-Systems/Computer-Data-and-Systems/MED/Overview-MED)
 
+## CMS Preclusions
+
+![](./img/cms_part_C_preclusion_list.png)
+
+[link](https://www.cms.gov/Medicare/Provider-Enrollment-and-Certification/Preclusion-List)
+
 ## NPDB
 
 ![](./img/npdb_national_practitioner_data_bank.png)
